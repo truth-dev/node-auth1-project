@@ -6,8 +6,13 @@
     "message": "You shall not pass!"
   }
 */
-function restricted() {
+async function restricted(req, res,next) {
+if(req.session.user){
+  next()
 
+}else{
+  next({status:401, message: 'you shall not pass!'})
+}
 }
 
 /*
@@ -18,8 +23,12 @@ function restricted() {
     "message": "Username taken"
   }
 */
-function checkUsernameFree() {
-
+async function checkUsernameFree(req, res, next) {
+if(req.body.username){
+  next()
+}else{
+  next({status:422, message:'Username has been taken by someonese, bad luck bro!'})
+}
 }
 
 /*
@@ -30,8 +39,12 @@ function checkUsernameFree() {
     "message": "Invalid credentials"
   }
 */
-function checkUsernameExists() {
-
+async function checkUsernameExists(req, res, next) {
+if(req.body.username){
+  next()
+}else{
+  next({status:401, message:'you have chosen bad credentials, try again!'})
+}
 }
 
 /*
